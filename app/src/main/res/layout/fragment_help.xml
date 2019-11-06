@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/question_one"
+        style="@style/settingHelpTextView"
+        android:text="カメラロールから画像を講義カメラへ移したいのですがどうすればいいですか？" />
+
+    <TextView
+        android:id="@+id/answer_one"
+        style="@style/settingHelpTextView"
+        android:text="フォルダの画面の左上からご利用いただけます！お待たせしました！"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/question_two"
+        style="@style/settingHelpTextView"
+        android:text="写真を友達に送りたいのですが、どうすればいいですか？" />
+
+    <TextView
+        android:id="@+id/answer_two"
+        style="@style/settingHelpTextView"
+        android:text="送りたい画像を選択して左下のボタンから送れるようになりました！"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/question_three"
+        style="@style/settingHelpTextView"
+        android:text="写真を横向きに取りたいのですが、どうすればいいですか？" />
+
+    <TextView
+        android:id="@+id/answer_three"
+        style="@style/settingHelpTextView"
+        android:text="現在はAndroidの回転ロックを解除した状態にすると横向きでの撮影が可能になります。そのままの状態でも横向きに取れるようにしようと考えておりますので少々お待ちください"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/question_four"
+        style="@style/settingHelpTextView"
+        android:text="歩行や授業外の時間で撮った写真はどうすればいいですか？" />
+
+    <TextView
+        android:id="@+id/answer_four"
+        style="@style/settingHelpTextView"
+        android:text="「講義カメラのカメラロール -> 授業ごとの写真一覧 -> 右上の選択 -> 真ん中下の移動」で写真を移動させることができます。そちらで対応していただけるとありがたいです！"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/question_five"
+        style="@style/settingHelpTextView"
+        android:text="カメラロールやLineと連携するにはどうすればいいですか？" />
+
+    <TextView
+        android:id="@+id/answer_five"
+        style="@style/settingHelpTextView"
+        android:text="「講義カメラのカメラロール -> 授業ごとの写真の一覧 -> 右上の選択 -> 左下のボタン」からLineやカメラロールと連携することができます！"
+        android:visibility="gone" />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/setting_navigation"
+    app:startDestination="@id/settingFragment">
+
+    <fragment
+        android:id="@+id/opinionFragment"
+        android:name="com.example.student_camera.opinion.OpinionFragment"
+        android:label="OpinionFragment" >
+        <action
+            android:id="@+id/action_opinionFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.example.student_camera.help.HelpFragment"
+        android:label="HelpFragment" >
+        <action
+            android:id="@+id/action_helpFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/timeScheduleFragment"
+        android:name="com.example.student_camera.time_schedule.TimeScheduleFragment"
+        android:label="TimeScheduleFragment" >
+        <action
+            android:id="@+id/action_timeScheduleFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.student_camera.setting.SettingFragment"
+        android:label="SettingFragment" >
+        <action
+            android:id="@+id/action_settingFragment_to_opinionFragment"
+            app:destination="@id/opinionFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_timeScheduleFragment"
+            app:destination="@id/timeScheduleFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+    </fragment>
+</navigation>
