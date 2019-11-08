@@ -1,10 +1,12 @@
 package com.example.student_camera.camera
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.student_camera.database.Photo
 import com.example.student_camera.database.PhotoDatabaseDao
 import kotlinx.coroutines.*
+import java.util.*
 
 class CameraViewModelFactory(
     private val dataSource: PhotoDatabaseDao,
@@ -33,10 +35,13 @@ class CameraViewModel(
 
     fun insert(uri: String) {
         uiScope.launch {
-            var newPhoto = Photo()
-            newPhoto.uri = uri
-            _insert(newPhoto)
+            val now = Date()
+//            todo timeCellNum, dayCellNumを判別するコードが必要
+//            1: monday, 7: sunday
+            var newPhoto = Photo(0, uri, 1, 1, now)
             _lastPhoto.value = newPhoto
+
+            Log.d("insert", _lastPhoto.value.toString())
         }
     }
 

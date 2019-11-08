@@ -19,13 +19,6 @@ class TimeScheduleViewModel(
 
     init {
         setTimeSchedule()
-        insertTimeSchedule()
-    }
-
-    fun setTimeSchedule() {
-        uiScope.launch {
-            _timeSchedules.value = _getAll()
-        }
     }
 
     fun updateTimeSchedule(id: Int, startAt: String, endAt: String) {
@@ -41,7 +34,7 @@ class TimeScheduleViewModel(
         }
     }
 
-    fun insertTimeSchedule() {
+    fun setTimeSchedule() {
         uiScope.launch {
             if (_get(1) == null) {
                 _insert(TimeSchedule(0, 1, "08:45", "10:15"))
@@ -58,6 +51,7 @@ class TimeScheduleViewModel(
             if (_get(5) == null) {
                 _insert(TimeSchedule(0, 5, "16:30", "18:00"))
             }
+            _timeSchedules.value = _getAll()
         }
     }
 

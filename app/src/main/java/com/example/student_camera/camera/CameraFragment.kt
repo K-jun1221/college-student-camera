@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
@@ -19,6 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.student_camera.R
 import com.example.student_camera.database.AppDatabase
 import com.example.student_camera.databinding.FragmentCameraBinding
@@ -59,6 +60,21 @@ class CameraFragment : Fragment() {
             requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
 
+        viewModel.lastPhoto.observe(this, Observer { newPhoto ->
+            val ctx = context
+            if (ctx != null) {
+                Glide.with(ctx)
+                    .load(Uri.parse(newPhoto.uri))
+                    .apply(
+                        RequestOptions()
+                            .placeholder(R.drawable.loading_animation)
+                            .error(R.drawable.ic_broken_image))
+                    .into(binding.lastImage)
+            }
+
+            binding.lastImage.setImageURI(Uri.parse(newPhoto.uri))
+        })
+
         // Every time the provided texture view changes, recompute layout
         viewFinder.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             updateTransform()
@@ -72,17 +88,7 @@ class CameraFragment : Fragment() {
             view.findNavController().navigate(R.id.action_cameraFragment_to_allPhotoFragment)
         }
 
-        viewModel.lastPhoto.observe(this, Observer {newPhoto ->
-            setLastImage(Uri.parse(newPhoto.uri))
-
-        })
-
         return binding.root
-    }
-
-    fun setLastImage(uri: Uri) {
-        binding.lastImage.setImageURI(uri)
-        binding.lastImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
     private fun startCamera() {

@@ -18,6 +18,7 @@
 package com.example.student_camera
 
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +38,11 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<Photo>?) {
  */
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
+    if (imgUrl != null) {
+        Log.d("insert", imgUrl)
+    } else {
+        Log.d("insert", "null")
+    }
     imgUrl?.let {
         val imgUri = Uri.parse(imgUrl)
         Glide.with(imgView.context)

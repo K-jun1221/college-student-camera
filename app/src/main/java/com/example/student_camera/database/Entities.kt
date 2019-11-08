@@ -1,10 +1,12 @@
 package com.example.student_camera.database
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import java.util.*
+
+
 
 @Entity(tableName = "photo")
+@TypeConverters(Converters::class)
 data class Photo(
     @PrimaryKey(autoGenerate = true)
     var photoId: Long = 0L,
@@ -12,9 +14,27 @@ data class Photo(
     @ColumnInfo(name = "uri")
     var uri: String = "",
 
+    @ColumnInfo(name = "day_cell_num")
+    var dayCellTNum: Int = 0,
+
+    @ColumnInfo(name = "time_cell_num")
+    var timeCellNum: Int = 0,
+
     @ColumnInfo(name = "created_at")
-    var createdAt: String? = null
+    var createdAt: Date? = null
 )
+
+class Converters {
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? {
+        return if (value == null) null else Date(value)
+    }
+
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time?.toLong()
+    }
+}
 
 @Entity(tableName = "time_schedule")
 data class TimeSchedule(
