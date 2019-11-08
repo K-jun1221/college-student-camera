@@ -34,9 +34,9 @@ interface TimeScheduleDatabaseDao {
     @Update
     fun update(ts: TimeSchedule)
 
-//    @Query("SELECT * from time_schedule WHERE num = :num")
-//    fun get(num: Int): TimeSchedule?
-//
-//    @Query("SELECT * FROM time_schedule")
-//    fun getAll(): List<TimeSchedule>
+    @Query("SELECT * from time_schedule WHERE num = :num")
+    fun get(num: Int): TimeSchedule?
+
+    @Query("SELECT * FROM time_schedule ORDER BY num")
+    fun getAll(): List<TimeSchedule>
 }

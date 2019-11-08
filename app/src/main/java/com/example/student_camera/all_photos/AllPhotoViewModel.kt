@@ -25,7 +25,6 @@ class AllPhotoViewModel(
         get() = _photo
 
     fun getLast() {
-        var photo: Photo? = null
         uiScope.launch {
             val newPhoto = _getLast()
             if (newPhoto != null) {

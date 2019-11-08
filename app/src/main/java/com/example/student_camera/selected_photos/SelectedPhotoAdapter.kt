@@ -1,6 +1,5 @@
 package com.example.student_camera.selected_photos
 
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,32 +9,36 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.student_camera.database.Photo
 import com.example.student_camera.databinding.FragmentSelectedPhotoItemBinding
 
-class SelectedPhotoAdapter(): ListAdapter<Photo, SelectedPhotoAdapter.ViewHolder>(PhotoDiffCallback())  {
-    // required method
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+class SelectedPhotoAdapter(): ListAdapter<Photo, SelectedPhotoAdapter.PhotoViewHolder>(PhotoDiffCallback())  {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
+        Log.d("onCreateViewHolder", "onCreateViewHolder called")
+        val viewHolder = PhotoViewHolder(FragmentSelectedPhotoItemBinding.inflate(LayoutInflater.from(parent.context)))
+        Log.d("onCreateViewHolder", "onCreateViewHolder called")
+        return viewHolder
+    }
+
+    override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
+        Log.d("onBindViewHolder", "onBindViewHolder called")
         val item = getItem(position)
         holder.bind(item)
+        Log.d("onBindViewHolder", "onBindViewHolder called")
     }
 
-    // required method
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
-    }
-
-    class ViewHolder private constructor(val binding: FragmentSelectedPhotoItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class PhotoViewHolder constructor(val binding: FragmentSelectedPhotoItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Photo) {
+            Log.d("PhotoViewHolder.bind", item.uri)
 
-            Log.d("viewHolder", "setURI")
-            binding.imageView.setImageURI(Uri.parse(item.uri))
-            Log.d("viewHolder", "setedURI")
+            binding.viewModel = item
+            binding.executePendingBindings()
         }
 
         companion object {
-            fun from(parent: ViewGroup): ViewHolder {
+            fun from(parent: ViewGroup): PhotoViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = FragmentSelectedPhotoItemBinding.inflate(layoutInflater, parent, false)
-                return ViewHolder(binding)
+                return PhotoViewHolder(binding)
             }
         }
     }

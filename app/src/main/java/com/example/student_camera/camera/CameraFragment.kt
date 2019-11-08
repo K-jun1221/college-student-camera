@@ -2,19 +2,21 @@ package com.example.student_camera.camera
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.student_camera.R
@@ -25,7 +27,7 @@ import java.util.concurrent.Executors
 
 
 private const val REQUEST_CODE_PERMISSIONS = 10
-private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.INTERNET)
 
 class CameraFragment : Fragment() {
     private val executor = Executors.newSingleThreadExecutor()
@@ -70,17 +72,26 @@ class CameraFragment : Fragment() {
             view.findNavController().navigate(R.id.action_cameraFragment_to_allPhotoFragment)
         }
 
+        viewModel.lastPhoto.observe(this, Observer {newPhoto ->
+            setLastImage(Uri.parse(newPhoto.uri))
+
+        })
+
         return binding.root
+    }
+
+    fun setLastImage(uri: Uri) {
+        binding.lastImage.setImageURI(uri)
+        binding.lastImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
     private fun startCamera() {
         // TODO いい感じにする
         val ctx = context ?: return
 
-
         // Create configuration object for the viewfinder use case
         val previewConfig = PreviewConfig.Builder().apply {
-            setTargetResolution(Size(640, 480))
+            setTargetResolution(Size(320, 240))
         }.build()
         val preview = Preview(previewConfig)
 
@@ -116,7 +127,6 @@ class CameraFragment : Fragment() {
                         exc: Throwable?
                     ) {
                         val msg = "Photo capture failed: $message"
-                        Log.e("CameraXApp", msg, exc)
                         viewFinder.post {
                             Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show()
                         }
@@ -125,13 +135,11 @@ class CameraFragment : Fragment() {
 
                     override fun onImageSaved(file: File) {
                         val msg = "Photo capture succeeded: ${file.absolutePath}"
-                        Log.d("CameraXApp", msg)
                         viewFinder.post {
                             Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show()
                         }
-
-                        Log.d("photo", uri.toURI().toString() + fileName)
-                        viewModel.insert(uri.toURI().toString() + fileName)
+                        val uri = uri.toURI().toString() + fileName
+                        viewModel.insert(uri)
                     }
                 })
         }

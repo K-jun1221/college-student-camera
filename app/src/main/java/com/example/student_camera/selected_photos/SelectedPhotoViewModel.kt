@@ -1,7 +1,6 @@
 package com.example.student_camera.selected_photos
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.student_camera.database.Photo
 import com.example.student_camera.database.PhotoDatabaseDao
@@ -32,19 +31,18 @@ class SelectedPhotoViewModel(
         }
     }
 
+    private suspend fun _getAll(): List<Photo>? {
+        var newPhotos: List<Photo>? = null
+        withContext(Dispatchers.IO) {
+            newPhotos = database.getAll()
+//            Log.d("photo_list in database access", photos!![0].uri)
+        }
+        return newPhotos
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
-    }
-
-    private suspend fun _getAll(): List<Photo>? {
-        var photos: List<Photo>? = null
-        withContext(Dispatchers.IO) {
-            photos = database.getAll()
-
-            Log.d("photo_list in database access", photos!![0].uri)
-        }
-        return photos
     }
 }
 

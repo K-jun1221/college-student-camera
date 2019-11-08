@@ -1,7 +1,10 @@
 package com.example.student_camera.all_photos
 
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +29,7 @@ class AllPhotoFragment : Fragment() {
 
         binding.allPhotos.setOnClickListener{ view: View ->
             view.findNavController().navigate(R.id.action_allPhotoFragment_to_selectedPhotoFragment)
+//            performFileSearch()
         }
 
         binding.excludedPhotos.setOnClickListener{ view: View ->
@@ -46,4 +50,27 @@ class AllPhotoFragment : Fragment() {
 
         return binding.root
     }
+
+    fun performFileSearch() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/*"
+        }
+
+        startActivityForResult(intent, READ_REQUEST_CODE)
+    }
+
+    companion object {
+        private const val READ_REQUEST_CODE: Int = 42
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            resultData?.data?.also { uri ->
+                Log.i("onActivityResult", "Uri: $uri")
+//                showImage(uri)
+            }
+        }
+    }
+
 }
