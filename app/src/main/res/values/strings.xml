@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">student_camera</string>
+    <string name="quote_format">\"%s\"</string>
 </resources>

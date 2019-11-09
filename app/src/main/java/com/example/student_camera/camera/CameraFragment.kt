@@ -71,8 +71,6 @@ class CameraFragment : Fragment() {
                             .error(R.drawable.ic_broken_image))
                     .into(binding.lastImage)
             }
-
-            binding.lastImage.setImageURI(Uri.parse(newPhoto.uri))
         })
 
         // Every time the provided texture view changes, recompute layout

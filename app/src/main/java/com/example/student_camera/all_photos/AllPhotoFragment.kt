@@ -19,7 +19,6 @@ class AllPhotoFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar!!.show()
         setHasOptionsMenu(true)
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_photo, container, false)
 
         val application = requireNotNull(this.activity).application
@@ -27,11 +26,20 @@ class AllPhotoFragment : Fragment() {
         val viewModelFactory = AllPhotoViewModelFactory(dataSource, application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AllPhotoViewModel::class.java)
 
+        binding.viewModel = viewModel
+
+        binding.allPhoto.setClipToOutline(true)
+        binding.execludedPhoto.setClipToOutline(true)
+
+        binding.lifecycleOwner = this
+
+
+
         return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.menu_all_photo, menu)
+        inflater.inflate(R.menu.menu_all_photo, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -44,5 +52,6 @@ class AllPhotoFragment : Fragment() {
     companion object {
         private const val READ_REQUEST_CODE: Int = 42
     }
-
 }
+
+data class MyName(var name: String = "", var nickname: String = "")

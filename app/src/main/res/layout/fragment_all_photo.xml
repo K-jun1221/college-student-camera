@@ -3,60 +3,104 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    
+
     <data>
+
         <variable
             name="viewModel"
             type="com.example.student_camera.all_photos.AllPhotoViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/execluded_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/all_photo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/all_photo"
-                app:layout_constraintTop_toTopOf="@+id/all_photo"
-                app:layout_constraintVertical_bias="0.0"
-                tools:srcCompat="@tools:sample/avatars" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/all_photo"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/execluded_photo"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/all_photo"
+                    android:layout_width="@dimen/small_image_size"
+                    android:layout_height="@dimen/small_image_size"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/round_image"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{viewModel.allLastPhoto.uri}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/execluded_photo"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/sunday"
-            android:text="日曜日"
-            style="@style/all_photo_subtitle" />
+                <ImageView
+                    android:id="@+id/execluded_photo"
+                    android:layout_width="@dimen/small_image_size"
+                    android:layout_height="@dimen/small_image_size"
+                    android:background="@drawable/round_image"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{viewModel.allLastPhoto.uri}"
+                    app:layout_constraintBottom_toBottomOf="@+id/all_photo"
+                    app:layout_constraintCircleRadius="@dimen/icon_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/all_photo"
+                    app:layout_constraintTop_toTopOf="@+id/all_photo"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/all_photo_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="全ての写真"
+                    android:textColor="@android:color/white"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/all_photo"
+                    app:layout_constraintEnd_toEndOf="@+id/all_photo"
+                    app:layout_constraintStart_toStartOf="@+id/all_photo"
+                    app:layout_constraintTop_toTopOf="@+id/all_photo" />
 
-        <TextView
-            android:id="@+id/monday"
-            android:text="月曜日"
-            style="@style/all_photo_subtitle" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/execluded_photo_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="時間外"
+                    android:textColor="@android:color/white"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/execluded_photo"
+                    app:layout_constraintEnd_toEndOf="@+id/execluded_photo"
+                    app:layout_constraintStart_toStartOf="@+id/execluded_photo"
+                    app:layout_constraintTop_toTopOf="@+id/execluded_photo" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/sunday"
+                style="@style/all_photo_subtitle"
+                android:text="日曜日" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:spanCount="2" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 </layout>

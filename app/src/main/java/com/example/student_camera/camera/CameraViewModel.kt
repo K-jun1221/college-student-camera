@@ -1,7 +1,6 @@
 package com.example.student_camera.camera
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.student_camera.database.Photo
 import com.example.student_camera.database.PhotoDatabaseDao
@@ -39,9 +38,9 @@ class CameraViewModel(
 //            todo timeCellNum, dayCellNumを判別するコードが必要
 //            1: monday, 7: sunday
             var newPhoto = Photo(0, uri, 1, 1, now)
-            _lastPhoto.value = newPhoto
 
-            Log.d("insert", _lastPhoto.value.toString())
+            _insert(newPhoto)
+            _lastPhoto.value = newPhoto
         }
     }
 

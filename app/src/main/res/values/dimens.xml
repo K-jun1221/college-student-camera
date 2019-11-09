@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="time_schedule_item_height">100dp</dimen>
+    <dimen name="small_image_size">130dp</dimen>
 </resources>
