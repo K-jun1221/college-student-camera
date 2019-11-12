@@ -22,8 +22,11 @@ interface PhotoDatabaseDao {
     @Query("SELECT * FROM photo ORDER BY photoId DESC LIMIT 1")
     fun getAllLast(): Photo?
 
-    @Query("SELECT * FROM photo WHERE day_cell_num = :dayCell AND time_cell_num = :timeCell ORDER BY photoId DESC LIMIT 1")
-    fun getSelectedLast(dayCell: Int, timeCell: Int): Photo?
+    @Query("SELECT * FROM photo WHERE day_cell_num = :dayCell ORDER BY photoId DESC LIMIT 5")
+    fun getSelectedLast(dayCell: Int): List<Photo>
+
+    @Query("SELECT * FROM photo WHERE day_cell_num = :dayCell AND time_cell_num = :timeCell ORDER BY photoId DESC LIMIT 5")
+    fun getSelectedCell(dayCell: Int, timeCell: Int): List<Photo>
 
     @Query("SELECT * FROM photo")
     fun getAll(): List<Photo>

@@ -18,23 +18,28 @@ class SelectedPhotoFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+
         val application = requireNotNull(this.activity).application
         val dataSource = AppDatabase.getPhotoInstance(application).photoDatabaseDao()
-        val viewModelFactory = SelectedPhotoViewModelFactory(dataSource, application)
+        val args = SelectedPhotoFragmentArgs.fromBundle(arguments!!)
+
+        val viewModelFactory = SelectedPhotoViewModelFactory(dataSource, application, args.selectedDay, args.selectedTime)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SelectedPhotoViewModel::class.java)
 
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_selected_photo, container, false)
         binding.viewModel = viewModel
+
         val adapter = SelectedPhotoAdapter()
-//         adapterにデータを流し込む
+        binding.recyclePhotos.adapter = adapter
+
+
+
         viewModel.photos.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }
         })
-
-        binding.recyclePhotos.adapter = adapter
 
         return binding.root
     }

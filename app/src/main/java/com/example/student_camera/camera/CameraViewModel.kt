@@ -35,9 +35,10 @@ class CameraViewModel(
     fun insert(uri: String) {
         uiScope.launch {
             val now = Date()
-//            todo timeCellNum, dayCellNumを判別するコードが必要
-//            1: monday, 7: sunday
-            var newPhoto = Photo(0, uri, 1, 1, now)
+            // todo timeCellNum, dayCellNumを判別するコードが必要
+            //            1: monday, 7: sunday
+            val random = Random();
+            var newPhoto = Photo(0, uri, random.nextInt(7) + 1, random.nextInt(7) + 1, now)
 
             _insert(newPhoto)
             _lastPhoto.value = newPhoto

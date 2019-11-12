@@ -1,6 +1,5 @@
 package com.example.student_camera.selected_photos
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -12,24 +11,18 @@ import com.example.student_camera.databinding.FragmentSelectedPhotoItemBinding
 class SelectedPhotoAdapter(): ListAdapter<Photo, SelectedPhotoAdapter.PhotoViewHolder>(PhotoDiffCallback())  {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
-        Log.d("onCreateViewHolder", "onCreateViewHolder called")
         val viewHolder = PhotoViewHolder(FragmentSelectedPhotoItemBinding.inflate(LayoutInflater.from(parent.context)))
-        Log.d("onCreateViewHolder", "onCreateViewHolder called")
         return viewHolder
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        Log.d("onBindViewHolder", "onBindViewHolder called")
         val item = getItem(position)
         holder.bind(item)
-        Log.d("onBindViewHolder", "onBindViewHolder called")
     }
 
     class PhotoViewHolder constructor(val binding: FragmentSelectedPhotoItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Photo) {
-            Log.d("PhotoViewHolder.bind", item.uri)
-
             binding.viewModel = item
             binding.executePendingBindings()
         }

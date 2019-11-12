@@ -138,10 +138,6 @@ class CameraFragment : Fragment() {
                     }
 
                     override fun onImageSaved(file: File) {
-                        val msg = "Photo capture succeeded: ${file.absolutePath}"
-                        viewFinder.post {
-                            Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show()
-                        }
                         val uri = uri.toURI().toString() + fileName
                         viewModel.insert(uri)
                     }

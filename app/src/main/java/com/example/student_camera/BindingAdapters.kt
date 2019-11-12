@@ -24,18 +24,23 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.student_camera.all_photos.AllPhotoAdapter
 import com.example.student_camera.database.Photo
 import com.example.student_camera.selected_photos.SelectedPhotoAdapter
 
 @BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<Photo>?) {
+fun bindRecyclerViewSelectedPhoto(recyclerView: RecyclerView, data: List<Photo>?) {
     val adapter = recyclerView.adapter as SelectedPhotoAdapter
     adapter.submitList(data)
 }
 
-/**
- * Uses the Glide library to load an image by URL into an [ImageView]
- */
+@BindingAdapter("listDataAllPhoto")
+fun bindRecyclerViewAllPhoto(recyclerView: RecyclerView, data: List<Photo>?) {
+    val adapter = recyclerView.adapter as AllPhotoAdapter
+    adapter.submitList(data)
+}
+
+
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     if (imgUrl != null) {

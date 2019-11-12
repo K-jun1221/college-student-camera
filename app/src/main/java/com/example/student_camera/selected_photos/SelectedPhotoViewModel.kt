@@ -8,33 +8,38 @@ import kotlinx.coroutines.*
 
 class SelectedPhotoViewModel(
     val database: PhotoDatabaseDao,
-    application: Application
+    application: Application,
+    selectedDay: Int,
+    selectedTime: Int
 ) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    private val selectedDay = selectedDay
+    private val selectedTime = selectedTime
+
     init {
-        getAll()
+        initialize()
     }
 
     private val _photos = MutableLiveData<List<Photo>>()
     val photos: LiveData<List<Photo>>
         get() = _photos
 
-    fun getAll() {
+    fun initialize() {
         uiScope.launch {
-            val newPhotos = _getAll()
+            val newPhotos = _getSelectedCell(selectedDay, selectedTime)
             if (newPhotos != null) {
                 _photos.value = newPhotos
             }
         }
     }
 
-    private suspend fun _getAll(): List<Photo>? {
+    private suspend fun _getSelectedCell(selectedTime: Int, selectedDay: Int): List<Photo>? {
         var newPhotos: List<Photo>? = null
         withContext(Dispatchers.IO) {
-            newPhotos = database.getAll()
+            newPhotos = database.getSelectedCell(selectedDay, selectedTime)
 //            Log.d("photo_list in database access", photos!![0].uri)
         }
         return newPhotos
@@ -48,12 +53,14 @@ class SelectedPhotoViewModel(
 
 class SelectedPhotoViewModelFactory(
     private val dataSource: PhotoDatabaseDao,
-    private val application: Application
+    private val application: Application,
+    private val selectedDay: Int,
+    private val selectedTime: Int
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SelectedPhotoViewModel::class.java)) {
-            return SelectedPhotoViewModel(dataSource, application) as T
+            return SelectedPhotoViewModel(dataSource, application, selectedDay, selectedTime) as T
         }
         throw IllegalArgumentException("Unewknown ViewModel class")
     }

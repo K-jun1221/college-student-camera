@@ -87,16 +87,111 @@
                 style="@style/all_photo_subtitle"
                 android:text="日曜日" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sundayRecycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:spanCount="2" />
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:listDataAllPhoto="@{viewModel.sundayLastPhoto}"
+                app:spanCount="2">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/monday"
+                style="@style/all_photo_subtitle"
+                android:text="月曜日"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mondayRecycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:listDataAllPhoto="@{viewModel.mondayLastPhoto}"
+                app:spanCount="2">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tuesday"
+                style="@style/all_photo_subtitle"
+                android:text="火曜日"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tuesdayRecycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:listDataAllPhoto="@{viewModel.tuesdayLastPhoto}"
+                app:spanCount="2">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/wednesday"
+                style="@style/all_photo_subtitle"
+                android:text="水曜日"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/wednesdayRecycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:listDataAllPhoto="@{viewModel.wednesdayLastPhoto}"
+                app:spanCount="2">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/thursday"
+                style="@style/all_photo_subtitle"
+                android:text="木曜日"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/thursdayRecycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:listDataAllPhoto="@{viewModel.thursdayLastPhoto}"
+                app:spanCount="2">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/friday"
+                style="@style/all_photo_subtitle"
+                android:text="金曜日"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fridayRecycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:listDataAllPhoto="@{viewModel.fridayLastPhoto}"
+                app:spanCount="2">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/saturday"
+                style="@style/all_photo_subtitle"
+                android:text="土曜日"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/saturdayRecycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:listDataAllPhoto="@{viewModel.saturdayLastPhoto}"
+                app:spanCount="2">
+
+            </androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
 
