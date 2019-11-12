@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -47,6 +48,9 @@ class SelectedPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(Ph
 
         fun bind(item: Photo) {
             binding.viewModel = item
+            binding.imageView.setOnClickListener({ view ->
+                view.findNavController().navigate(SelectedPhotoFragmentDirections.actionSelectedPhotoFragmentToDetailPhotoFragment(item.uri))
+            })
             binding.executePendingBindings()
         }
 

@@ -42,6 +42,7 @@ class CameraViewModel(
 
             _insert(newPhoto)
             _lastPhoto.value = newPhoto
+//            clear()
         }
     }
 

@@ -86,7 +86,7 @@ class TimeScheduleFragment: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.getItemId() == android.R.id.home) {
-            view?.findNavController()?.navigate(R.id.action_timeScheduleFragment_to_settingFragment)
+            view?.findNavController()?.navigate(TimeScheduleFragmentDirections.actionTimeScheduleFragmentToSettingFragment())
         }
         return super.onOptionsItemSelected(item)
     }

@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_detailPhotoFragment_to_selectedPhotoFragment"
             app:destination="@id/selectedPhotoFragment" />
+        <argument
+            android:name="uri"
+            app:argType="string" />
     </fragment>
     <activity
         android:id="@+id/settingActivity"

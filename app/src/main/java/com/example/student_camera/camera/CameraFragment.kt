@@ -79,11 +79,11 @@ class CameraFragment : Fragment() {
         }
 
         binding.icSetting.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_cameraFragment_to_settingActivity)
+            view.findNavController().navigate(CameraFragmentDirections.actionCameraFragmentToSettingActivity())
         }
 
         binding.icAllPhotos.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_cameraFragment_to_allPhotoFragment)
+            view.findNavController().navigate(CameraFragmentDirections.actionCameraFragmentToAllPhotoFragment())
         }
 
         return binding.root

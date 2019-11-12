@@ -1,6 +1,6 @@
 package com.example.student_camera.all_photos
 
-import android.graphics.Rect
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,27 +8,46 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.student_camera.R
 import com.example.student_camera.database.Photo
 import com.example.student_camera.databinding.FragmentAllPhotoItemBinding
+import java.util.*
 
 
-class AllPhotoAdapter(dayName: String) : ListAdapter<Photo, AllPhotoAdapter.PhotoViewHolder>(PhotoDiffCallback()) {
+class AllPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
 
-    val dayName = dayName
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
-        return PhotoViewHolder.from(parent)
+    val ITEM_VIEW_TYPE_HEADER = 0
+    val ITEM_VIEW_TYPE_ITEM = 1
+
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is DataItem.Header -> ITEM_VIEW_TYPE_HEADER
+            is DataItem.PhotoItem -> ITEM_VIEW_TYPE_ITEM
+        }
     }
 
-    override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item, position, dayName)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            ITEM_VIEW_TYPE_HEADER -> HeaderViewHolder.from(parent)
+            ITEM_VIEW_TYPE_ITEM -> PhotoViewHolder.from(parent)
+            else -> throw ClassCastException("Unknown viewType ${viewType}")
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is PhotoViewHolder -> {
+                val item = getItem(position) as DataItem.PhotoItem
+                holder.bind(item.photo, position, "日曜")
+            }
+        }
     }
 
     class PhotoViewHolder constructor(val binding: FragmentAllPhotoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Photo, position: Int, dayName: String) {
-            binding.viewModel = item
+            binding.viewModel = AllPhotoItemViewModel(position, item)
             binding.labelText.text = dayName + (position + 1).toString() + "限"
             binding.executePendingBindings()
         }
@@ -45,38 +64,64 @@ class AllPhotoAdapter(dayName: String) : ListAdapter<Photo, AllPhotoAdapter.Phot
             }
         }
     }
+
+    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        companion object {
+            fun from(parent: ViewGroup): HeaderViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val view =
+                    layoutInflater.inflate(R.layout.fragment_all_photo_header, parent, false)
+                return HeaderViewHolder(view)
+            }
+        }
+    }
 }
 
-class PhotoDiffCallback : DiffUtil.ItemCallback<Photo>() {
-    override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
-        return oldItem.photoId == newItem.photoId
+class PhotoDiffCallback : DiffUtil.ItemCallback<DataItem>() {
+    override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+    @SuppressLint("DiffUtilEquals")
+    override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
         return oldItem == newItem
     }
 }
 
-class CustomItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
+// TODO まとめるためにコード自体は残しておく
+//class CustomItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
+//
+//    override fun getItemOffsets(
+//        outRect: Rect,
+//        view: View,
+//        parent: RecyclerView,
+//        state: RecyclerView.State
+//    ) {
+//        val position = parent.getChildAdapterPosition(view)
+//
+//        outRect.top = if (position == 0 || position == 1) space else space / 2
+//        outRect.left = if (position % 2 == 1) space / 2 else space
+//        outRect.right = if (position % 2 == 0) space / 2 else space
+//        outRect.bottom = if (position - 1 == state.getItemCount()) space else space / 2
+//    }
+//
+//    companion object {
+//
+//        fun createDefaultDecoration(): CustomItemDecoration {
+//            return CustomItemDecoration(85)
+//        }
+//    }
+//}
 
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        val position = parent.getChildAdapterPosition(view)
+sealed class DataItem {
+    abstract val id: Long
 
-        outRect.top = if (position == 0 || position == 1) space else space / 2
-        outRect.left = if (position % 2 == 1) space / 2 else space
-        outRect.right = if (position % 2 == 0) space / 2 else space
-        outRect.bottom = if (position - 1 == state.getItemCount()) space else space / 2
+    data class PhotoItem(val photo: Photo) : DataItem() {
+        override val id = photo.photoId
     }
 
-    companion object {
+    data class Header(val text: String) : DataItem() {
+        override val id = 10000 + Random().nextLong()
 
-        fun createDefaultDecoration(): CustomItemDecoration {
-            return CustomItemDecoration(85)
-        }
     }
 }

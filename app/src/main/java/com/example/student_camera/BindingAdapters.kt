@@ -24,9 +24,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.student_camera.all_photos.AllPhotoAdapter
-import com.example.student_camera.database.Photo
 import com.example.student_camera.selected_photos.DataItem
 import com.example.student_camera.selected_photos.SelectedPhotoAdapter
+import com.example.student_camera.all_photos.DataItem as DataItem2
 
 @BindingAdapter("listData")
 fun bindRecyclerViewSelectedPhoto(recyclerView: RecyclerView, data: List<DataItem>?) {
@@ -35,7 +35,7 @@ fun bindRecyclerViewSelectedPhoto(recyclerView: RecyclerView, data: List<DataIte
 }
 
 @BindingAdapter("listDataAllPhoto")
-fun bindRecyclerViewAllPhoto(recyclerView: RecyclerView, data: List<Photo>?) {
+fun bindRecyclerViewAllPhoto(recyclerView: RecyclerView, data: List<DataItem2>?) {
     val adapter = recyclerView.adapter as AllPhotoAdapter
     adapter.submitList(data)
 }
