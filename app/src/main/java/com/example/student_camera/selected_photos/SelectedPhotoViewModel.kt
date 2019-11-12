@@ -23,15 +23,17 @@ class SelectedPhotoViewModel(
         initialize()
     }
 
-    private val _photos = MutableLiveData<List<Photo>>()
-    val photos: LiveData<List<Photo>>
+    private val _photos = MutableLiveData<List<DataItem>>()
+    val photos: LiveData<List<DataItem>>
         get() = _photos
 
     fun initialize() {
         uiScope.launch {
             val newPhotos = _getSelectedCell(selectedDay, selectedTime)
             if (newPhotos != null) {
-                _photos.value = newPhotos
+
+//                TODO 撮った日時でまとめる
+                _photos.value = listOf(DataItem.Header("test text")) + newPhotos.map { DataItem.PhotoItem(it) } + listOf(DataItem.Header("test text")) + newPhotos.map { DataItem.PhotoItem(it) }
             }
         }
     }

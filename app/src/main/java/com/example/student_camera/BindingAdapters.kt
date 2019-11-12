@@ -18,7 +18,6 @@
 package com.example.student_camera
 
 import android.net.Uri
-import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -26,10 +25,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.student_camera.all_photos.AllPhotoAdapter
 import com.example.student_camera.database.Photo
+import com.example.student_camera.selected_photos.DataItem
 import com.example.student_camera.selected_photos.SelectedPhotoAdapter
 
 @BindingAdapter("listData")
-fun bindRecyclerViewSelectedPhoto(recyclerView: RecyclerView, data: List<Photo>?) {
+fun bindRecyclerViewSelectedPhoto(recyclerView: RecyclerView, data: List<DataItem>?) {
     val adapter = recyclerView.adapter as SelectedPhotoAdapter
     adapter.submitList(data)
 }
@@ -43,11 +43,6 @@ fun bindRecyclerViewAllPhoto(recyclerView: RecyclerView, data: List<Photo>?) {
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-    if (imgUrl != null) {
-        Log.d("insert", imgUrl)
-    } else {
-        Log.d("insert", "null")
-    }
     imgUrl?.let {
         val imgUri = Uri.parse(imgUrl)
         Glide.with(imgView.context)

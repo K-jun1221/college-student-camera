@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.student_camera.R
 import com.example.student_camera.database.AppDatabase
 import com.example.student_camera.databinding.FragmentSelectedPhotoBinding
@@ -33,13 +33,17 @@ class SelectedPhotoFragment : Fragment() {
         val adapter = SelectedPhotoAdapter()
         binding.recyclePhotos.adapter = adapter
 
-
-
-        viewModel.photos.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.submitList(it)
+        val manager = GridLayoutManager(activity, 4)
+        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return when (adapter.getItemViewType(position)) {
+                    adapter.ITEM_VIEW_TYPE_HEADER -> 4
+                    adapter.ITEM_VIEW_TYPE_ITEM -> 1
+                    else -> 0
+                }
             }
-        })
+        }
+        binding.recyclePhotos.layoutManager = manager
 
         return binding.root
     }
