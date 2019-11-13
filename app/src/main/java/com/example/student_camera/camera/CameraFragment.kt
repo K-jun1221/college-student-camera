@@ -83,6 +83,7 @@ class CameraFragment : Fragment() {
         }
 
         binding.icAllPhotos.setOnClickListener { view: View ->
+            CameraX.unbindAll()
             view.findNavController().navigate(CameraFragmentDirections.actionCameraFragmentToAllPhotoFragment())
         }
 
