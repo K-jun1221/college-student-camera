@@ -8,11 +8,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.student_camera.R
 import com.example.student_camera.database.Photo
 import com.example.student_camera.databinding.FragmentAllPhotoItemBinding
 import java.util.*
-
 
 class AllPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
 
@@ -47,7 +45,7 @@ class AllPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(PhotoDi
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Photo, position: Int, dayName: String) {
-            binding.viewModel = AllPhotoItemViewModel(position, item)
+            binding.photo = item
             binding.labelText.text = dayName + (position + 1).toString() + "限"
             binding.executePendingBindings()
         }
@@ -70,7 +68,7 @@ class AllPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(PhotoDi
             fun from(parent: ViewGroup): HeaderViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val view =
-                    layoutInflater.inflate(R.layout.fragment_all_photo_header, parent, false)
+                    layoutInflater.inflate(com.example.student_camera.R.layout.fragment_all_photo_header, parent, false)
                 return HeaderViewHolder(view)
             }
         }

@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="com.example.student_camera.all_photos.AllPhotoItemViewModel" />
+            name="photo"
+            type="com.example.student_camera.database.Photo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +21,7 @@
             android:layout_height="@dimen/small_image_size"
             android:background="@drawable/round_image"
             android:scaleType="centerCrop"
-            app:imageUrl="@{viewModel.photo.uri}"
+            app:imageUrl="@{photo.uri}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
