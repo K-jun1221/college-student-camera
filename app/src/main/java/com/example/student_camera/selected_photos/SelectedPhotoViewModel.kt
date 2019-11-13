@@ -33,7 +33,7 @@ class SelectedPhotoViewModel(
             if (newPhotos != null) {
 
 //                TODO 撮った日時でまとめる
-                _photos.value = listOf(DataItem.Header("test text")) + newPhotos.map { DataItem.PhotoItem(it) } + listOf(DataItem.Header("test text")) + newPhotos.map { DataItem.PhotoItem(it) }
+                _photos.value = listOf(DataItem.Header("11月12日 (木)")) + newPhotos.map { DataItem.PhotoItem(it) } + listOf(DataItem.Header("11月13日 (金)")) + newPhotos.map { DataItem.PhotoItem(it) }
             }
         }
     }
@@ -41,8 +41,8 @@ class SelectedPhotoViewModel(
     private suspend fun _getSelectedCell(selectedTime: Int, selectedDay: Int): List<Photo>? {
         var newPhotos: List<Photo>? = null
         withContext(Dispatchers.IO) {
-            newPhotos = database.getSelectedCell(selectedDay, selectedTime)
-//            Log.d("photo_list in database access", photos!![0].uri)
+            newPhotos = database.getAll()
+//            newPhotos = database.getSelectedCell(selectedDay, selectedTime)
         }
         return newPhotos
     }

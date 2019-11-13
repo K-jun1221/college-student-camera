@@ -28,7 +28,7 @@ class SelectedPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(Ph
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ITEM_VIEW_TYPE_HEADER -> TextViewHolder.from(parent)
+            ITEM_VIEW_TYPE_HEADER -> HeaderViewHolder.from(parent)
             ITEM_VIEW_TYPE_ITEM -> PhotoViewHolder.from(parent)
             else -> throw ClassCastException("Unknown viewType ${viewType}")
         }
@@ -38,7 +38,11 @@ class SelectedPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(Ph
         when (holder) {
             is PhotoViewHolder -> {
                 val item = getItem(position) as DataItem.PhotoItem
-                holder.bind(item.photo)
+                holder.bind(item)
+            }
+            is HeaderViewHolder -> {
+                val item = getItem(position) as DataItem.Header
+                holder.bind(item)
             }
         }
     }
@@ -46,10 +50,10 @@ class SelectedPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(Ph
     class PhotoViewHolder constructor(val binding: FragmentSelectedPhotoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Photo) {
-            binding.viewModel = item
+        fun bind(item: DataItem.PhotoItem) {
+            binding.viewModel = item.photo
             binding.imageView.setOnClickListener({ view ->
-                view.findNavController().navigate(SelectedPhotoFragmentDirections.actionSelectedPhotoFragmentToDetailPhotoFragment(item.uri))
+                view.findNavController().navigate(SelectedPhotoFragmentDirections.actionSelectedPhotoFragmentToDetailPhotoFragment(item.photo.uri))
             })
             binding.executePendingBindings()
         }
@@ -64,15 +68,18 @@ class SelectedPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(Ph
         }
     }
 
-    class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class HeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(item: DataItem.Header) {
+            val header = view.findViewById<TextView>(R.id.date_header)
+            header.text = item.text
+        }
+
         companion object {
-            fun from(parent: ViewGroup): TextViewHolder {
+            fun from(parent: ViewGroup): HeaderViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val view =
                     layoutInflater.inflate(R.layout.fragment_selected_photo_header, parent, false)
-
-                view.findViewById<TextView>(R.id.date_header).text = "10月12日(月)"
-                return TextViewHolder(view)
+                return HeaderViewHolder(view)
             }
         }
     }

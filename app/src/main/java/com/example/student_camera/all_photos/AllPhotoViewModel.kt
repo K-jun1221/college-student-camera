@@ -29,7 +29,7 @@ class AllPhotoViewModel(
 
     fun getAll() {
         uiScope.launch {
-            _all.value = listOf(DataItem.Header("test text")) +_getAll().map { DataItem.PhotoItem(it) }
+            _all.value = listOf(DataItem.Header("日曜日")) +_getAll().map { DataItem.PhotoItem(it) } + listOf(DataItem.Header("月曜日")) +_getAll().map { DataItem.PhotoItem(it) }
             _allLast.value = _getAllLast()
         }
     }

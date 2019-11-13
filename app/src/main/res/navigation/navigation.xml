@@ -9,7 +9,8 @@
         android:label="CameraFragment" >
         <action
             android:id="@+id/action_cameraFragment_to_allPhotoFragment"
-            app:destination="@id/allPhotoFragment" />
+            app:destination="@id/allPhotoFragment"
+            app:popUpTo="@+id/cameraFragment" />
         <action
             android:id="@+id/action_cameraFragment_to_settingActivity"
             app:destination="@id/settingActivity" />

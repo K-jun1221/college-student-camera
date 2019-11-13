@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.student_camera.R
 import com.example.student_camera.database.Photo
 import com.example.student_camera.databinding.FragmentAllPhotoItemBinding
 import java.util.*
@@ -36,7 +38,11 @@ class AllPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(PhotoDi
         when (holder) {
             is PhotoViewHolder -> {
                 val item = getItem(position) as DataItem.PhotoItem
-                holder.bind(item.photo, position, "日曜")
+                holder.bind(item, position, "日曜")
+            }
+            is HeaderViewHolder -> {
+                val item = getItem(position) as DataItem.Header
+                holder.bind(item)
             }
         }
     }
@@ -44,8 +50,8 @@ class AllPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(PhotoDi
     class PhotoViewHolder constructor(val binding: FragmentAllPhotoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Photo, position: Int, dayName: String) {
-            binding.photo = item
+        fun bind(item: DataItem.PhotoItem, position: Int, dayName: String) {
+            binding.photo = item.photo
             binding.labelText.text = dayName + (position + 1).toString() + "限"
             binding.executePendingBindings()
         }
@@ -63,7 +69,12 @@ class AllPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(PhotoDi
         }
     }
 
-    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class HeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(item: DataItem.Header) {
+            val header = view.findViewById<TextView>(R.id.header)
+            header.text = item.text
+        }
+
         companion object {
             fun from(parent: ViewGroup): HeaderViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
