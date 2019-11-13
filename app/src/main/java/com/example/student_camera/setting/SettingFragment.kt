@@ -15,15 +15,15 @@ class SettingFragment: Fragment() {
 
 
         binding.opinion.setOnClickListener{ view: View ->
-            view.findNavController().navigate(R.id.action_settingFragment_to_opinionFragment)
+            view.findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToOpinionFragment())
         }
 
         binding.help.setOnClickListener{ view: View ->
-            view.findNavController().navigate(R.id.action_settingFragment_to_helpFragment)
+            view.findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToHelpFragment())
         }
 
         binding.timeSchedule.setOnClickListener{ view: View ->
-            view.findNavController().navigate(R.id.action_settingFragment_to_timeScheduleFragment)
+            view.findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToTimeScheduleFragment())
         }
 
         setHasOptionsMenu(true)

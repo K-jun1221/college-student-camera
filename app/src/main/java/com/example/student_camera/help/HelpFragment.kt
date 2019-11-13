@@ -59,7 +59,7 @@ class HelpFragment: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.getItemId() == android.R.id.home) {
-            view?.findNavController()?.navigate(R.id.action_helpFragment_to_settingFragment)
+            view?.findNavController()?.navigate(HelpFragmentDirections.actionHelpFragmentToSettingFragment())
         }
         return super.onOptionsItemSelected(item)
     }

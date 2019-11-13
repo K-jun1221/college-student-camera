@@ -1,20 +1,18 @@
-package com.example.student_camera.selected_photos
+package com.example.student_camera.all_photos
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.student_camera.R
 import com.example.student_camera.database.Photo
-import com.example.student_camera.databinding.FragmentSelectedPhotoItemBinding
+import com.example.student_camera.databinding.FragmentAllPhotoItemBinding
 import java.util.*
 
-class SelectedPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
+class AllPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
 
     val ITEM_VIEW_TYPE_HEADER = 0
     val ITEM_VIEW_TYPE_ITEM = 1
@@ -28,7 +26,7 @@ class SelectedPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(Ph
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ITEM_VIEW_TYPE_HEADER -> TextViewHolder.from(parent)
+            ITEM_VIEW_TYPE_HEADER -> HeaderViewHolder.from(parent)
             ITEM_VIEW_TYPE_ITEM -> PhotoViewHolder.from(parent)
             else -> throw ClassCastException("Unknown viewType ${viewType}")
         }
@@ -38,41 +36,40 @@ class SelectedPhotoAdapter() : ListAdapter<DataItem, RecyclerView.ViewHolder>(Ph
         when (holder) {
             is PhotoViewHolder -> {
                 val item = getItem(position) as DataItem.PhotoItem
-                holder.bind(item.photo)
+                holder.bind(item.photo, position, "日曜")
             }
         }
     }
 
-    class PhotoViewHolder constructor(val binding: FragmentSelectedPhotoItemBinding) :
+    class PhotoViewHolder constructor(val binding: FragmentAllPhotoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Photo) {
-            binding.viewModel = item
-            binding.imageView.setOnClickListener({ view ->
-                view.findNavController().navigate(SelectedPhotoFragmentDirections.actionSelectedPhotoFragmentToDetailPhotoFragment(item.uri))
-            })
+        fun bind(item: Photo, position: Int, dayName: String) {
+            binding.photo = item
+            binding.labelText.text = dayName + (position + 1).toString() + "限"
             binding.executePendingBindings()
         }
 
         companion object {
             fun from(parent: ViewGroup): PhotoViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding =
-                    FragmentSelectedPhotoItemBinding.inflate(layoutInflater, parent, false)
+                val binding = FragmentAllPhotoItemBinding.inflate(layoutInflater, parent, false)
+                binding.imageView.setClipToOutline(true)
+                binding.imageView.setOnClickListener({view ->
+                    view.findNavController().navigate(AllPhotoFragmentDirections.actionAllPhotoFragmentToSelectedPhotoFragment(1, 1))
+                })
                 return PhotoViewHolder(binding)
             }
         }
     }
 
-    class TextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         companion object {
-            fun from(parent: ViewGroup): TextViewHolder {
+            fun from(parent: ViewGroup): HeaderViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val view =
-                    layoutInflater.inflate(R.layout.fragment_selected_photo_header, parent, false)
-
-                view.findViewById<TextView>(R.id.date_header).text = "10月12日(月)"
-                return TextViewHolder(view)
+                    layoutInflater.inflate(com.example.student_camera.R.layout.fragment_all_photo_header, parent, false)
+                return HeaderViewHolder(view)
             }
         }
     }
@@ -88,6 +85,31 @@ class PhotoDiffCallback : DiffUtil.ItemCallback<DataItem>() {
         return oldItem == newItem
     }
 }
+
+// TODO まとめるためにコード自体は残しておく
+//class CustomItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
+//
+//    override fun getItemOffsets(
+//        outRect: Rect,
+//        view: View,
+//        parent: RecyclerView,
+//        state: RecyclerView.State
+//    ) {
+//        val position = parent.getChildAdapterPosition(view)
+//
+//        outRect.top = if (position == 0 || position == 1) space else space / 2
+//        outRect.left = if (position % 2 == 1) space / 2 else space
+//        outRect.right = if (position % 2 == 0) space / 2 else space
+//        outRect.bottom = if (position - 1 == state.getItemCount()) space else space / 2
+//    }
+//
+//    companion object {
+//
+//        fun createDefaultDecoration(): CustomItemDecoration {
+//            return CustomItemDecoration(85)
+//        }
+//    }
+//}
 
 sealed class DataItem {
     abstract val id: Long

@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.student_camera.R
 import com.example.student_camera.database.AppDatabase
 import com.example.student_camera.databinding.FragmentAllPhotoBinding
@@ -27,13 +28,24 @@ class AllPhotoFragment : Fragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AllPhotoViewModel::class.java)
 
         binding.viewModel = viewModel
-
-        binding.allPhoto.setClipToOutline(true)
-        binding.execludedPhoto.setClipToOutline(true)
-
         binding.lifecycleOwner = this
 
+        val adapter = AllPhotoAdapter()
+        binding.recycleView.adapter = adapter
+//        TODO まとめ用コード
+//        binding.recycleView.addItemDecoration(CustomItemDecoration.createDefaultDecoration())
 
+        val manager = GridLayoutManager(activity, 2)
+        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return when (adapter.getItemViewType(position)) {
+                    adapter.ITEM_VIEW_TYPE_HEADER -> 2
+                    adapter.ITEM_VIEW_TYPE_ITEM -> 1
+                    else -> 0
+                }
+            }
+        }
+        binding.recycleView.layoutManager = manager
 
         return binding.root
     }
@@ -44,7 +56,7 @@ class AllPhotoFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.toString() == "Camera") {
-            view?.findNavController()?.navigate(R.id.action_allPhotoFragment_to_cameraFragment)
+            view?.findNavController()?.navigate(AllPhotoFragmentDirections.actionAllPhotoFragmentToCameraFragment())
         }
         return super.onOptionsItemSelected(item)
     }

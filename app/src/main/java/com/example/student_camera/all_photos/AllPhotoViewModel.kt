@@ -1,7 +1,6 @@
 package com.example.student_camera.all_photos
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.student_camera.database.Photo
 import com.example.student_camera.database.PhotoDatabaseDao
@@ -15,35 +14,37 @@ class AllPhotoViewModel(
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    var _allLastPhoto = MutableLiveData<Photo>()
-    val allLastPhoto: LiveData<Photo>
-        get() = _allLastPhoto
+
+    var _all = MutableLiveData<List<DataItem>>()
+    val all: LiveData<List<DataItem>>
+        get() = _all
+
+    var _allLast = MutableLiveData<Photo>()
+    val allLast: LiveData<Photo>
+        get() = _allLast
 
     init {
-//        _allLastPhotoUri.value = "testVaue"
-        getLast()
+        getAll()
     }
 
-    fun getLast() {
+    fun getAll() {
         uiScope.launch {
-            var newPhoto = _getAllLast()
-            if (newPhoto != null) {
-                _allLastPhoto.value = newPhoto
-//                Log.d("newPhoto", allLastPhotoUri)
-            } else {
-                Log.d("newPhoto", "null")
-            }
+            _all.value = listOf(DataItem.Header("test text")) +_getAll().map { DataItem.PhotoItem(it) }
+            _allLast.value = _getAllLast()
         }
     }
-
-    fun testFunc() {
-        Log.d("testFunc", "testFunc called")
-    }
-
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    private suspend fun _getAll(): List<Photo> {
+        lateinit var photos: List<Photo>
+        withContext(Dispatchers.IO) {
+            photos = database.getAll()
+        }
+        return photos
     }
 
     private suspend fun _getAllLast(): Photo? {
@@ -54,10 +55,11 @@ class AllPhotoViewModel(
         return photo
     }
 
-    private suspend fun _getSelectedLast(dayNum: Int, timeNum: Int): Photo? {
-        var photo: Photo? = null
+
+    private suspend fun _getAll(dayNum: Int): List<Photo> {
+        lateinit var photo: List<Photo>
         withContext(Dispatchers.IO) {
-            photo = database.getSelectedLast(dayNum, timeNum)
+            photo = database.getAll()
         }
         return photo
     }
@@ -68,7 +70,6 @@ class AllPhotoViewModelFactory(
     private val dataSource: PhotoDatabaseDao,
     private val application: Application
 ) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AllPhotoViewModel::class.java)) {
             return AllPhotoViewModel(dataSource, application) as T
@@ -76,4 +77,3 @@ class AllPhotoViewModelFactory(
         throw IllegalArgumentException("Unewknown ViewModel class")
     }
 }
-

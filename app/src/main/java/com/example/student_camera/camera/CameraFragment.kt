@@ -79,11 +79,11 @@ class CameraFragment : Fragment() {
         }
 
         binding.icSetting.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_cameraFragment_to_settingActivity)
+            view.findNavController().navigate(CameraFragmentDirections.actionCameraFragmentToSettingActivity())
         }
 
         binding.icAllPhotos.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_cameraFragment_to_allPhotoFragment)
+            view.findNavController().navigate(CameraFragmentDirections.actionCameraFragmentToAllPhotoFragment())
         }
 
         return binding.root
@@ -138,10 +138,6 @@ class CameraFragment : Fragment() {
                     }
 
                     override fun onImageSaved(file: File) {
-                        val msg = "Photo capture succeeded: ${file.absolutePath}"
-                        viewFinder.post {
-                            Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show()
-                        }
                         val uri = uri.toURI().toString() + fileName
                         viewModel.insert(uri)
                     }

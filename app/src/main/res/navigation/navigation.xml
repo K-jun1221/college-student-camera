@@ -35,6 +35,12 @@
         <action
             android:id="@+id/action_selectedPhotoFragment_to_allPhotoFragment"
             app:destination="@id/allPhotoFragment" />
+        <argument
+            android:name="selectedTime"
+            app:argType="integer" />
+        <argument
+            android:name="selectedDay"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/detailPhotoFragment"
@@ -43,6 +49,9 @@
         <action
             android:id="@+id/action_detailPhotoFragment_to_selectedPhotoFragment"
             app:destination="@id/selectedPhotoFragment" />
+        <argument
+            android:name="uri"
+            app:argType="string" />
     </fragment>
     <activity
         android:id="@+id/settingActivity"

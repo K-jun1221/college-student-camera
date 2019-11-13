@@ -30,7 +30,7 @@ class OpinionFragment: Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.getItemId() == android.R.id.home) {
 //            TODO いい感じにする
-            view?.findNavController()?.navigate(R.id.action_opinionFragment_to_settingFragment)
+            view?.findNavController()?.navigate(OpinionFragmentDirections.actionOpinionFragmentToSettingFragment())
         }
         return super.onOptionsItemSelected(item)
     }
