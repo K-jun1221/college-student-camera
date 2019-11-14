@@ -2,7 +2,6 @@ package com.example.student_camera.time_schedule
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -21,9 +20,6 @@ class TimeScheduleFragment: Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_time_schedule, container, false)
 
         setHasOptionsMenu(true)
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true);
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayShowHomeEnabled(true);
-        (activity as AppCompatActivity).supportActionBar!!.setHomeButtonEnabled(true);
 
         val application = requireNotNull(this.activity).application
         val dataSource = AppDatabase.getTimeScheduleInstance(application).timeScheduleDatabaseDao()
@@ -76,6 +72,8 @@ class TimeScheduleFragment: Fragment() {
                 newDialog.show(fragmentManager, "TimeScheduleDialog_5")
             }
         })
+
+        activity?.setTitle("")
 
         return binding.root
     }

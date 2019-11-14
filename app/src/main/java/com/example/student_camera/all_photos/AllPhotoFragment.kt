@@ -47,6 +47,8 @@ class AllPhotoFragment : Fragment() {
         }
         binding.recycleView.layoutManager = manager
 
+        activity?.setTitle("講義一覧")
+
         return binding.root
     }
 

@@ -21,6 +21,7 @@ class DetailPhotoFragment : Fragment() {
         val viewModelFactory = SelectedPhotoViewModelFactory(application, args.uri)
         binding.viewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailPhotoViewModel::class.java)
         binding.lifecycleOwner = this
+
         return binding.root
     }
 }

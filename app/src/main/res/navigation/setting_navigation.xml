@@ -9,7 +9,11 @@
         android:label="OpinionFragment" >
         <action
             android:id="@+id/action_opinionFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/slide_to_right"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_to_left" />
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
@@ -17,7 +21,11 @@
         android:label="HelpFragment" >
         <action
             android:id="@+id/action_helpFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/slide_to_right"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_to_left" />
     </fragment>
     <fragment
         android:id="@+id/timeScheduleFragment"
@@ -25,7 +33,11 @@
         android:label="TimeScheduleFragment" >
         <action
             android:id="@+id/action_timeScheduleFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/slide_to_right"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_to_left" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -33,12 +45,24 @@
         android:label="SettingFragment" >
         <action
             android:id="@+id/action_settingFragment_to_opinionFragment"
-            app:destination="@id/opinionFragment" />
+            app:destination="@id/opinionFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
         <action
             android:id="@+id/action_settingFragment_to_timeScheduleFragment"
-            app:destination="@id/timeScheduleFragment" />
+            app:destination="@id/timeScheduleFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
         <action
             android:id="@+id/action_settingFragment_to_helpFragment"
-            app:destination="@id/helpFragment" />
+            app:destination="@id/helpFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
     </fragment>
 </navigation>

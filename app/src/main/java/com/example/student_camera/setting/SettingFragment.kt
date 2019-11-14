@@ -27,6 +27,7 @@ class SettingFragment: Fragment() {
         }
 
         setHasOptionsMenu(true)
+        activity?.setTitle("設定")
 
         return binding.root
     }

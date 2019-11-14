@@ -51,6 +51,8 @@ class SelectedPhotoFragment : Fragment() {
             }
         })
 
+        activity?.setTitle("全ての写真")
+
         return binding.root
     }
 }
