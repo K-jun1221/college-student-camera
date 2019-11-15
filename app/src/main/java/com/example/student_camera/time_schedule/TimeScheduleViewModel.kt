@@ -1,6 +1,7 @@
 package com.example.student_camera.time_schedule
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.student_camera.database.TimeSchedule
 import com.example.student_camera.database.TimeScheduleDatabaseDao
@@ -21,23 +22,30 @@ class TimeScheduleViewModel(
         setTimeSchedule()
     }
 
-    fun updateTimeSchedule(id: Int, startAt: String, endAt: String) {
-        uiScope.launch {
-            var time_schedule = _get(id)
-            if (time_schedule != null) {
-                time_schedule.start_at = startAt
-                time_schedule.end_at = endAt
-                _update(time_schedule)
+    fun updateTimeSchedule(num: Int, startAt: String, endAt: String) {
+        _timeSchedules.value = _timeSchedules.value?.map {
+            if (it.num == num) {
+                TimeSchedule(it.timeScheduleId, num, startAt, endAt)
+            } else {
+                it
             }
+        }
 
-            _timeSchedules.value = _getAll()
+    }
+
+    fun saveTimeSchedule() {
+        uiScope.launch {
+            _timeSchedules.value?.map {
+                //                TODO Error Handling
+                _update(it)
+            }
         }
     }
 
     fun setTimeSchedule() {
         uiScope.launch {
             if (_get(1) == null) {
-                _insert(TimeSchedule(0, 1, "08:45", "10:15"))
+                _insert(TimeSchedule(0, 1, "8:45", "10:15"))
             }
             if (_get(2) == null) {
                 _insert(TimeSchedule(0, 2, "10:30", "12:00"))
@@ -55,10 +63,19 @@ class TimeScheduleViewModel(
         }
     }
 
+    private suspend fun _get(num: Int): TimeSchedule? {
+        var time_schedule: TimeSchedule? = null
+        withContext(Dispatchers.IO) {
+            time_schedule = database.get(num)
+        }
+        return time_schedule
+    }
+
     private suspend fun _getAll(): List<TimeSchedule> {
         lateinit var ts: List<TimeSchedule>
         withContext(Dispatchers.IO) {
             ts = database.getAll()
+            Log.i("_getAll", ts.toString())
         }
         return ts
     }
@@ -69,20 +86,11 @@ class TimeScheduleViewModel(
         }
     }
 
-    private suspend fun _get(num: Int): TimeSchedule? {
-        var time_schedule: TimeSchedule? = null
-        withContext(Dispatchers.IO) {
-            time_schedule = database.get(num)
-        }
-        return time_schedule
-    }
+    private suspend fun _update(ts: TimeSchedule) {
 
-    private suspend fun _update(ts: TimeSchedule): TimeSchedule? {
-        var time_schedule: TimeSchedule? = null
         withContext(Dispatchers.IO) {
             database.update(ts)
         }
-        return time_schedule
     }
 
     override fun onCleared() {

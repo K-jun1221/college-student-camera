@@ -12,18 +12,23 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="15dp"
             android:gravity="center"
-            android:text="授業時間はこんな感じに登録されています" />
+            android:text="授業時間はこんな感じに登録されています"
+            android:textSize="16dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/time_schedule_item_height">
+            android:layout_height="@dimen/time_schedule_item_height"
+            android:background="@drawable/border_top_bottom">
 
             <TextView
                 android:id="@+id/label_1"
                 style="@style/settingTimeScheduleLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:text="1時間目"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:text="08:45 ~ 10:15"
-                android:textSize="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />-->
@@ -44,7 +48,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/time_schedule_item_height">
+            android:layout_height="@dimen/time_schedule_item_height"
+            android:background="@drawable/border_top_bottom">
 
             <TextView
                 android:id="@+id/label_2"
@@ -70,7 +75,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/title_3"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/time_schedule_item_height">
+            android:layout_height="@dimen/time_schedule_item_height"
+            android:background="@drawable/border_top_bottom">
 
             <TextView
                 android:id="@+id/label_3"
@@ -95,7 +101,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/time_schedule_item_height">
+            android:layout_height="@dimen/time_schedule_item_height"
+            android:background="@drawable/border_top_bottom">
 
             <TextView
                 android:id="@+id/label_4"
@@ -120,7 +127,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/time_schedule_item_height">
+            android:layout_height="@dimen/time_schedule_item_height"
+            android:background="@drawable/border_top_bottom">
 
             <TextView
                 android:id="@+id/label_5"
@@ -147,13 +155,21 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:gravity="center"
-            android:text="時間をタップすると変更できるよ" />
+            android:text="時間をタップすると変更できるよ"
+            android:textSize="16dp" />
 
         <Button
             android:id="@+id/saveButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:textSize="25dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/mainColor"
+            android:layout_gravity="center"
+            android:background="@drawable/round_image"
+            android:layout_height="60dp"
             android:text="保存" />
     </LinearLayout>
 </layout>

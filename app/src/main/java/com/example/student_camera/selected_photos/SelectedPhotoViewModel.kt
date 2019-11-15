@@ -41,8 +41,7 @@ class SelectedPhotoViewModel(
     private suspend fun _getSelectedCell(selectedTime: Int, selectedDay: Int): List<Photo>? {
         var newPhotos: List<Photo>? = null
         withContext(Dispatchers.IO) {
-            newPhotos = database.getAll()
-//            newPhotos = database.getSelectedCell(selectedDay, selectedTime)
+            newPhotos = database.getSelectedCell(selectedDay, selectedTime)
         }
         return newPhotos
     }

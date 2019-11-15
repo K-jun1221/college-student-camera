@@ -2,6 +2,7 @@ package com.example.student_camera.time_schedule
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -73,7 +74,16 @@ class TimeScheduleFragment: Fragment() {
             }
         })
 
-        activity?.setTitle("")
+        binding.saveButton.setOnClickListener({
+            viewModel.saveTimeSchedule()
+            Toast.makeText(
+                context,
+                "保存しました",
+                Toast.LENGTH_SHORT
+            ).show()
+        })
+
+        activity?.setTitle("授業時間")
 
         return binding.root
     }

@@ -2,6 +2,7 @@ package com.example.student_camera.opinion
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -16,6 +17,15 @@ class OpinionFragment: Fragment() {
 
         setHasOptionsMenu(true)
         activity?.setTitle("ご意見箱")
+
+        binding.sendButton.setOnClickListener({
+            binding.editText.setText("")
+            Toast.makeText(
+                context,
+                "送信しました!",
+                Toast.LENGTH_SHORT
+            ).show()
+        })
 
         return binding.root
     }

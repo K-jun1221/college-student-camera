@@ -49,8 +49,9 @@ class CameraFragment : Fragment() {
 
         // ViewModelを設定
         val application = requireNotNull(this.activity).application
-        val dataSource = AppDatabase.getPhotoInstance(application).photoDatabaseDao()
-        val viewModelFactory = CameraViewModelFactory(dataSource, application)
+        val dataSourcePhoto = AppDatabase.getPhotoInstance(application).photoDatabaseDao()
+        val dataSourceTimeSchedule = AppDatabase.getPhotoInstance(application).timeScheduleDatabaseDao()
+        val viewModelFactory = CameraViewModelFactory(dataSourcePhoto, dataSourceTimeSchedule, application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CameraViewModel::class.java)
 
         // Request camera permissions

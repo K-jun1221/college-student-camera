@@ -19,8 +19,16 @@ class HelpFragment: Fragment() {
         binding.questionOne.setOnClickListener {
             binding.answerOne.visibility = switchVisibility(binding.answerOne.visibility)
         }
+        binding.answerOne.setOnClickListener {
+            binding.answerOne.visibility = switchVisibility(binding.answerOne.visibility)
+        }
+
 
         binding.questionTwo.setOnClickListener {
+            binding.answerTwo.visibility = switchVisibility(binding.answerTwo.visibility)
+        }
+
+        binding.answerTwo.setOnClickListener {
             binding.answerTwo.visibility = switchVisibility(binding.answerTwo.visibility)
         }
 
@@ -28,7 +36,15 @@ class HelpFragment: Fragment() {
             binding.answerThree.visibility = switchVisibility(binding.answerThree.visibility)
         }
 
+        binding.answerThree.setOnClickListener {
+            binding.answerThree.visibility = switchVisibility(binding.answerThree.visibility)
+        }
+
         binding.questionFour.setOnClickListener {
+            binding.answerFour.visibility = switchVisibility(binding.answerFour.visibility)
+        }
+
+        binding.answerFour.setOnClickListener {
             binding.answerFour.visibility = switchVisibility(binding.answerFour.visibility)
         }
 
@@ -36,7 +52,11 @@ class HelpFragment: Fragment() {
             binding.answerFive.visibility = switchVisibility(binding.answerFive.visibility)
         }
 
-        activity?.setTitle("")
+        binding.answerFive.setOnClickListener {
+            binding.answerFive.visibility = switchVisibility(binding.answerFive.visibility)
+        }
+
+        activity?.setTitle("ヘルプ")
 
 
         return binding.root
