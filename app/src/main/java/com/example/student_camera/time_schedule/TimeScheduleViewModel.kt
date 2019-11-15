@@ -60,6 +60,8 @@ class TimeScheduleViewModel(
                 _insert(TimeSchedule(0, 5, "16:30", "18:00"))
             }
             _timeSchedules.value = _getAll()
+
+            Log.i("_timeSchedules.value", _timeSchedules.value.toString())
         }
     }
 

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
 import android.view.TextureView
@@ -23,6 +24,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.student_camera.R
 import com.example.student_camera.database.AppDatabase
 import com.example.student_camera.databinding.FragmentCameraBinding
+import com.example.student_camera.time_schedule.TimeScheduleViewModel
+import com.example.student_camera.time_schedule.TimeScheduleViewModelFactory
 import java.io.File
 import java.util.concurrent.Executors
 
@@ -50,9 +53,11 @@ class CameraFragment : Fragment() {
         // ViewModelを設定
         val application = requireNotNull(this.activity).application
         val dataSourcePhoto = AppDatabase.getPhotoInstance(application).photoDatabaseDao()
-        val dataSourceTimeSchedule = AppDatabase.getPhotoInstance(application).timeScheduleDatabaseDao()
-        val viewModelFactory = CameraViewModelFactory(dataSourcePhoto, dataSourceTimeSchedule, application)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(CameraViewModel::class.java)
+        val dataSourceTimeSchedule =
+            AppDatabase.getPhotoInstance(application).timeScheduleDatabaseDao()
+//        val viewModelFactory =
+//            CameraViewModelFactory(dataSourcePhoto, dataSourceTimeSchedule, application)
+        viewModel = CameraViewModel(dataSourcePhoto, dataSourceTimeSchedule)
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -69,7 +74,8 @@ class CameraFragment : Fragment() {
                     .apply(
                         RequestOptions()
                             .placeholder(R.drawable.loading_animation)
-                            .error(R.drawable.ic_broken_image))
+                            .error(R.drawable.ic_broken_image)
+                    )
                     .into(binding.lastImage)
             }
         })
@@ -80,12 +86,14 @@ class CameraFragment : Fragment() {
         }
 
         binding.icSetting.setOnClickListener { view: View ->
-            view.findNavController().navigate(CameraFragmentDirections.actionCameraFragmentToSettingActivity())
+            view.findNavController()
+                .navigate(CameraFragmentDirections.actionCameraFragmentToSettingActivity())
         }
 
         binding.icAllPhotos.setOnClickListener { view: View ->
             CameraX.unbindAll()
-            view.findNavController().navigate(CameraFragmentDirections.actionCameraFragmentToAllPhotoFragment())
+            view.findNavController()
+                .navigate(CameraFragmentDirections.actionCameraFragmentToAllPhotoFragment())
         }
 
         return binding.root
