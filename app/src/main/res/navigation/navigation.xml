@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
     app:startDestination="@id/cameraFragment">
 
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.student_camera.camera.CameraFragment"
-        android:label="CameraFragment" >
+        android:label="CameraFragment">
         <action
             android:id="@+id/action_cameraFragment_to_allPhotoFragment"
             app:destination="@id/allPhotoFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
             app:popUpTo="@+id/cameraFragment" />
         <action
             android:id="@+id/action_cameraFragment_to_settingActivity"
@@ -18,24 +23,40 @@
     <fragment
         android:id="@+id/allPhotoFragment"
         android:name="com.example.student_camera.all_photos.AllPhotoFragment"
-        android:label="AllPhotoFragment" >
+        android:label="AllPhotoFragment">
         <action
             android:id="@+id/action_allPhotoFragment_to_cameraFragment"
-            app:destination="@id/cameraFragment" />
+            app:destination="@id/cameraFragment"
+            app:enterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/slide_to_right"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_to_left" />
         <action
             android:id="@+id/action_allPhotoFragment_to_selectedPhotoFragment"
-            app:destination="@id/selectedPhotoFragment" />
+            app:destination="@id/selectedPhotoFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
     </fragment>
     <fragment
         android:id="@+id/selectedPhotoFragment"
         android:name="com.example.student_camera.selected_photos.SelectedPhotoFragment"
-        android:label="SelectedPhotoFragment" >
+        android:label="SelectedPhotoFragment">
         <action
             android:id="@+id/action_selectedPhotoFragment_to_detailPhotoFragment"
-            app:destination="@id/detailPhotoFragment" />
+            app:destination="@id/detailPhotoFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
         <action
             android:id="@+id/action_selectedPhotoFragment_to_allPhotoFragment"
-            app:destination="@id/allPhotoFragment" />
+            app:destination="@id/allPhotoFragment"
+            app:enterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/slide_to_right"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_to_left" />
         <argument
             android:name="selectedTime"
             app:argType="integer" />
@@ -46,10 +67,14 @@
     <fragment
         android:id="@+id/detailPhotoFragment"
         android:name="com.example.student_camera.detail_photo.DetailPhotoFragment"
-        android:label="DetailPhotoFragment" >
+        android:label="DetailPhotoFragment">
         <action
             android:id="@+id/action_detailPhotoFragment_to_selectedPhotoFragment"
-            app:destination="@id/selectedPhotoFragment" />
+            app:destination="@id/selectedPhotoFragment"
+            app:enterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/slide_to_right"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_to_left" />
         <argument
             android:name="uri"
             app:argType="string" />

@@ -2,7 +2,6 @@ package com.example.student_camera.opinion
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -16,9 +15,7 @@ class OpinionFragment: Fragment() {
         binding = DataBindingUtil.inflate(inflater, com.example.student_camera.R.layout.fragment_opinion, container, false)
 
         setHasOptionsMenu(true)
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true);
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayShowHomeEnabled(true);
-        (activity as AppCompatActivity).supportActionBar!!.setHomeButtonEnabled(true);
+        activity?.setTitle("ご意見箱")
 
         return binding.root
     }

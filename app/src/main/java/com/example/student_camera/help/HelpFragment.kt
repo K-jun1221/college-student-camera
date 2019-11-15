@@ -2,7 +2,6 @@ package com.example.student_camera.help
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -16,9 +15,6 @@ class HelpFragment: Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_help, container, false)
 
         setHasOptionsMenu(true)
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true);
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayShowHomeEnabled(true);
-        (activity as AppCompatActivity).supportActionBar!!.setHomeButtonEnabled(true);
 
         binding.questionOne.setOnClickListener {
             binding.answerOne.visibility = switchVisibility(binding.answerOne.visibility)
@@ -39,6 +35,8 @@ class HelpFragment: Fragment() {
         binding.questionFive.setOnClickListener {
             binding.answerFive.visibility = switchVisibility(binding.answerFive.visibility)
         }
+
+        activity?.setTitle("")
 
 
         return binding.root
