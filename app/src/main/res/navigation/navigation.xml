@@ -86,13 +86,25 @@
         android:label="SettingFragment" >
         <action
             android:id="@+id/action_settingFragment_to_timeScheduleFragment"
-            app:destination="@id/timeScheduleFragment" />
+            app:destination="@id/timeScheduleFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
         <action
             android:id="@+id/action_settingFragment_to_opinionFragment"
-            app:destination="@id/opinionFragment" />
+            app:destination="@id/opinionFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
         <action
             android:id="@+id/action_settingFragment_to_helpFragment"
-            app:destination="@id/helpFragment" />
+            app:destination="@id/helpFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
         <action
             android:id="@+id/action_settingFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
