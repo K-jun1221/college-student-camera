@@ -1,9 +1,7 @@
 package com.example.student_camera.camera
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
 import com.example.student_camera.database.Photo
 import com.example.student_camera.database.PhotoDatabaseDao
 import com.example.student_camera.database.TimeSchedule
@@ -12,26 +10,26 @@ import kotlinx.coroutines.*
 import java.util.*
 
 
-//class CameraViewModelFactory(
-//    private val dataSourcePhoto: PhotoDatabaseDao,
-//    private val dataSourceTimeSchedule: TimeScheduleDatabaseDao,
-//    private val application: Application
-//) : ViewModelProvider.Factory {
-//    @Suppress("unchecked_cast")
-//    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(CameraViewModel::class.java)) {
-//            return CameraViewModel(dataSourcePhoto, dataSourceTimeSchedule, application) as T
-//        }
-//        throw IllegalArgumentException("Unknown ViewModel class")
-//    }
-//}
+class CameraViewModelFactory(
+    private val dataSourcePhoto: PhotoDatabaseDao,
+    private val dataSourceTimeSchedule: TimeScheduleDatabaseDao,
+    private val application: Application
+) : ViewModelProvider.Factory {
+    @Suppress("unchecked_cast")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(CameraViewModel::class.java)) {
+            return CameraViewModel(dataSourcePhoto, dataSourceTimeSchedule, application) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
 
 // viewModel
 class CameraViewModel(
     val databasePhoto: PhotoDatabaseDao,
-    val databaseTimeSchedule: TimeScheduleDatabaseDao
-//    application: Application
-) : ViewModel() {
+    val databaseTimeSchedule: TimeScheduleDatabaseDao,
+    application: Application
+) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -39,21 +37,6 @@ class CameraViewModel(
     private val _lastPhoto = MutableLiveData<Photo>()
     val lastPhoto: LiveData<Photo>
         get() = _lastPhoto
-
-    private val _timeSchedules = MutableLiveData<List<TimeSchedule>>()
-    val timeSchedules: LiveData<List<TimeSchedule>>
-        get() = _timeSchedules
-
-    init {
-        setTimeSchedule()
-    }
-
-    fun setTimeSchedule() {
-        uiScope.launch {
-            _timeSchedules.value = _getAll()
-            Log.i("_timeSchedules", _timeSchedules.value.toString())
-        }
-    }
 
     fun insert(uri: String) {
         uiScope.launch {
@@ -75,14 +58,8 @@ class CameraViewModel(
 
             var timeCell = 0
 
-
-
-            Log.d("timeSchedules1", _getAll().toString())
-            Log.d("timeSchedules2", _timeSchedules.value.toString())
-            Log.d("timeSchedules3", timeSchedules.value.toString())
-            timeSchedules.value?.forEach {
-
-                Log.d("timeSchedules", it.toString())
+            val timeSchedules = _getAll()
+            timeSchedules.map {
                 val startAt = it.start_at
                 val endAt = it.end_at
                 val nowStr = hour.toString() + ":" + minute.toString()
@@ -95,7 +72,6 @@ class CameraViewModel(
             }
 
             var newPhoto = Photo(0, uri, dayCell, timeCell, now)
-            Log.i("newPhoto", newPhoto.toString())
             _insert(newPhoto)
             _lastPhoto.value = newPhoto
         }

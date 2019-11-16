@@ -17,8 +17,9 @@
             app:popExitAnim="@anim/slide_to_right"
             app:popUpTo="@+id/cameraFragment" />
         <action
-            android:id="@+id/action_cameraFragment_to_settingActivity"
-            app:destination="@id/settingActivity" />
+            android:id="@+id/action_cameraFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:popUpTo="@+id/cameraFragment" />
     </fragment>
     <fragment
         android:id="@+id/allPhotoFragment"
@@ -79,8 +80,45 @@
             android:name="uri"
             app:argType="string" />
     </fragment>
-    <activity
-        android:id="@+id/settingActivity"
-        android:name="com.example.student_camera.SettingActivity"
-        android:label="SettingActivity" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.student_camera.setting.SettingFragment"
+        android:label="SettingFragment" >
+        <action
+            android:id="@+id/action_settingFragment_to_timeScheduleFragment"
+            app:destination="@id/timeScheduleFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_opinionFragment"
+            app:destination="@id/opinionFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/opinionFragment"
+        android:name="com.example.student_camera.opinion.OpinionFragment"
+        android:label="OpinionFragment" >
+        <action
+            android:id="@+id/action_opinionFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.example.student_camera.help.HelpFragment"
+        android:label="HelpFragment" >
+        <action
+            android:id="@+id/action_helpFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/timeScheduleFragment"
+        android:name="com.example.student_camera.time_schedule.TimeScheduleFragment"
+        android:label="TimeScheduleFragment" >
+        <action
+            android:id="@+id/action_timeScheduleFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
 </navigation>

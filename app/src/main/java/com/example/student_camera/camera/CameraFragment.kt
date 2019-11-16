@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
 import android.view.TextureView
@@ -55,9 +54,13 @@ class CameraFragment : Fragment() {
         val dataSourcePhoto = AppDatabase.getPhotoInstance(application).photoDatabaseDao()
         val dataSourceTimeSchedule =
             AppDatabase.getPhotoInstance(application).timeScheduleDatabaseDao()
-//        val viewModelFactory =
-//            CameraViewModelFactory(dataSourcePhoto, dataSourceTimeSchedule, application)
-        viewModel = CameraViewModel(dataSourcePhoto, dataSourceTimeSchedule)
+        val viewModelFactory = CameraViewModelFactory(dataSourcePhoto, dataSourceTimeSchedule, application)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(CameraViewModel::class.java)
+
+        val viewModelFactoryTs = TimeScheduleViewModelFactory(dataSourceTimeSchedule, application)
+        activity?.run {
+            ViewModelProviders.of(this, viewModelFactoryTs).get(TimeScheduleViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -86,8 +89,9 @@ class CameraFragment : Fragment() {
         }
 
         binding.icSetting.setOnClickListener { view: View ->
+            CameraX.unbindAll()
             view.findNavController()
-                .navigate(CameraFragmentDirections.actionCameraFragmentToSettingActivity())
+                .navigate(CameraFragmentDirections.actionCameraFragmentToSettingFragment())
         }
 
         binding.icAllPhotos.setOnClickListener { view: View ->
