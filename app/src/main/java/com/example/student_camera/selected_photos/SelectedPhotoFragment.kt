@@ -19,7 +19,6 @@ class SelectedPhotoFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-
         val application = requireNotNull(this.activity).application
         val dataSource = AppDatabase.getPhotoInstance(application).photoDatabaseDao()
         val args = SelectedPhotoFragmentArgs.fromBundle(arguments!!)

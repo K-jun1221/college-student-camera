@@ -1,7 +1,6 @@
 package com.example.student_camera.time_schedule
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.student_camera.database.TimeSchedule
 import com.example.student_camera.database.TimeScheduleDatabaseDao
@@ -75,7 +74,6 @@ class TimeScheduleViewModel(
         lateinit var ts: List<TimeSchedule>
         withContext(Dispatchers.IO) {
             ts = database.getAll()
-            Log.i("_getAll", ts.toString())
         }
         return ts
     }

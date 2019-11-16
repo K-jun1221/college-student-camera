@@ -1,7 +1,6 @@
 package com.example.student_camera.all_photos
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.student_camera.database.Photo
 import com.example.student_camera.database.PhotoDatabaseDao
@@ -25,21 +24,41 @@ class AllPhotoViewModel(
 
     fun getAll() {
         uiScope.launch {
-            var friday: List<DataItem> = listOf(DataItem.Header("金曜日"))
-            for (i in 1..5) {
-                val item = DataItem.PhotoItem(_getSelectedLast(5, i))
-                if (0 < item.photo.photoId) {
-                    friday += listOf(item)
-                }
-            }
-
-            Log.i("friday", friday.toString())
 
             var tempList: List<DataItem> = listOf()
 
-            if (friday.size != 1) {
-                tempList = tempList + friday
-            }
+            // 全ての写真
+            var all = listOf(DataItem.PhotoItem(_getAllLast(), "全ての画像", -1, -1))
+            // 時間外の写真
+            var execlude = listOf(DataItem.PhotoItem(_getSelectedDayLast(0), "時間外", -1, 0))
+            tempList += all + execlude
+
+            val dayOfWeeks =
+                listOf<String>("日") + listOf<String>("月") + listOf<String>("火") + listOf<String>("水") + listOf<String>(
+                    "木"
+                ) + listOf<String>("金") + listOf<String>("土")
+            val dayToNum: Map<String, Int> =
+                mapOf("日" to 7, "月" to 1, "火" to 2, "水" to 3, "木" to 4, "金" to 5, "土" to 6)
+
+            dayOfWeeks.forEach({
+                var day: List<DataItem> = listOf(DataItem.Header(it + "曜日"))
+                for (i in 1..5) {
+                    val item =
+                        DataItem.PhotoItem(
+                            _getSelectedLast(dayToNum.get(it)!!, i),
+                            it + "曜" + i.toString() + "限",
+                            dayToNum.get(it)!!,
+                            i
+                        )
+                    if (0 < item.photo.photoId) {
+                        day += listOf(item)
+                    }
+                }
+
+                if (day.size != 1) {
+                    tempList = tempList + day
+                }
+            })
 
             _all.value = tempList
 
@@ -55,6 +74,19 @@ class AllPhotoViewModel(
         lateinit var photo: Photo
         withContext(Dispatchers.IO) {
             val selectedPhoto = database.getAllLast()
+            if (selectedPhoto != null) {
+                photo = selectedPhoto
+            } else {
+                photo = Photo(0, "", 0, 0)
+            }
+        }
+        return photo
+    }
+
+    private suspend fun _getSelectedDayLast(timeNum: Int): Photo {
+        lateinit var photo: Photo
+        withContext(Dispatchers.IO) {
+            val selectedPhoto = database.getSelectedDayLast(timeNum)
             if (selectedPhoto != null) {
                 photo = selectedPhoto
             } else {
