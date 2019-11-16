@@ -30,6 +30,9 @@ interface PhotoDatabaseDao {
 
     @Query("SELECT * FROM photo")
     fun getAll(): List<Photo>
+
+    @Query("SELECT * FROM time_schedule")
+    fun getAllTimeSchedule(): List<TimeSchedule>
 }
 
 @Dao

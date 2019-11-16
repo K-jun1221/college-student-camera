@@ -2,6 +2,7 @@ package com.example.student_camera.setting
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -26,6 +27,7 @@ class SettingFragment: Fragment() {
             view.findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToTimeScheduleFragment())
         }
 
+        (activity as AppCompatActivity).supportActionBar!!.show()
         setHasOptionsMenu(true)
         activity?.setTitle("設定")
 
@@ -38,7 +40,7 @@ class SettingFragment: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.toString() =="Delete") {
-            getActivity()!!.finish()
+            view?.findNavController()?.navigate(SettingFragmentDirections.actionSettingFragmentToCameraFragment())
         }
 
         return super.onOptionsItemSelected(item)

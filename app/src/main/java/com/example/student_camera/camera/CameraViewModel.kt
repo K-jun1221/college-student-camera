@@ -1,7 +1,6 @@
 package com.example.student_camera.camera
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.student_camera.database.Photo
 import com.example.student_camera.database.PhotoDatabaseDao
@@ -60,9 +59,7 @@ class CameraViewModel(
             var timeCell = 0
 
             val timeSchedules = _getAll()
-
-            Log.d("timeSchedules", timeSchedules.toString())
-            timeSchedules.forEach {
+            timeSchedules.map {
                 val startAt = it.start_at
                 val endAt = it.end_at
                 val nowStr = hour.toString() + ":" + minute.toString()
@@ -75,7 +72,6 @@ class CameraViewModel(
             }
 
             var newPhoto = Photo(0, uri, dayCell, timeCell, now)
-            Log.i("newPhoto", newPhoto.toString())
             _insert(newPhoto)
             _lastPhoto.value = newPhoto
         }
@@ -102,9 +98,7 @@ class CameraViewModel(
     private suspend fun _getAll(): List<TimeSchedule> {
         lateinit var ts: List<TimeSchedule>
         withContext(Dispatchers.IO) {
-//            TODO データが取得できない
             ts = databaseTimeSchedule.getAll()
-            ts = listOf(TimeSchedule(0, 1, "10:00", "23:00"))
         }
 
         return ts

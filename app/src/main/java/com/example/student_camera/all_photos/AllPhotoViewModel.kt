@@ -25,42 +25,6 @@ class AllPhotoViewModel(
 
     fun getAll() {
         uiScope.launch {
-            //            日曜日
-            var sunday: List<DataItem> = listOf(DataItem.Header("日曜日"))
-            for (i in 1..5) {
-                val item = DataItem.PhotoItem(_getSelectedLast(7, i))
-                if (0 < item.photo.photoId) {
-                    sunday += listOf(item)
-                }
-            }
-            var monday: List<DataItem> = listOf(DataItem.Header("月曜日"))
-            for (i in 1..5) {
-                val item = DataItem.PhotoItem(_getSelectedLast(1, i))
-                if (0 < item.photo.photoId) {
-                    monday += listOf(item)
-                }
-            }
-            var tuesday: List<DataItem> = listOf(DataItem.Header("火曜日"))
-            for (i in 1..5) {
-                val item = DataItem.PhotoItem(_getSelectedLast(2, i))
-                if (0 < item.photo.photoId) {
-                    tuesday += listOf(item)
-                }
-            }
-            var wednesday: List<DataItem> = listOf(DataItem.Header("水曜日"))
-            for (i in 1..5) {
-                val item = DataItem.PhotoItem(_getSelectedLast(3, i))
-                if (0 < item.photo.photoId) {
-                    wednesday += listOf(item)
-                }
-            }
-            var thursday: List<DataItem> = listOf(DataItem.Header("木曜日"))
-            for (i in 1..5) {
-                val item = DataItem.PhotoItem(_getSelectedLast(4, i))
-                if (0 < item.photo.photoId) {
-                    thursday += listOf(item)
-                }
-            }
             var friday: List<DataItem> = listOf(DataItem.Header("金曜日"))
             for (i in 1..5) {
                 val item = DataItem.PhotoItem(_getSelectedLast(5, i))
@@ -68,44 +32,14 @@ class AllPhotoViewModel(
                     friday += listOf(item)
                 }
             }
-            var saturday: List<DataItem> = listOf(DataItem.Header("土曜日"))
-            for (i in 1..5) {
-                val item = DataItem.PhotoItem(_getSelectedLast(6, i))
-                if (0 < item.photo.photoId) {
-                    saturday += listOf(item)
-                }
-            }
 
-            Log.i("monday", monday.toString())
             Log.i("friday", friday.toString())
 
-            var tempList: List<DataItem> =
-                listOf(DataItem.PhotoItem(_getAllLast())) + listOf(DataItem.PhotoItem(_getAllLast()))
-//            if (1 < sunday.size) {
-//                tempList = tempList + sunday
-//            }
-//            if (1 < monday.size) {
-//                tempList = tempList + monday
-//            }
-//
-//            if (tuesday.size != 1) {
-//                tempList = tempList + tuesday
-//            }
-//
-//            if (wednesday.size != 1) {
-//                tempList = tempList + wednesday
-//            }
-//
-//            if (thursday.size != 1) {
-//                tempList = tempList + thursday
-//            }
+            var tempList: List<DataItem> = listOf()
 
             if (friday.size != 1) {
                 tempList = tempList + friday
             }
-//            if (saturday.size != 1) {
-//                tempList = tempList + saturday
-//            }
 
             _all.value = tempList
 
