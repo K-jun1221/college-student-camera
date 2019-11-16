@@ -41,9 +41,6 @@ class CameraViewModel(
     fun insert(uri: String) {
         uiScope.launch {
             val now = Date()
-            val hour = now.hours
-            val minute = now.minutes
-
             val c = Calendar.getInstance()
             c.time = now
 
@@ -62,7 +59,7 @@ class CameraViewModel(
             timeSchedules.map {
                 val startAt = it.start_at
                 val endAt = it.end_at
-                val nowStr = hour.toString() + ":" + minute.toString()
+                val nowStr = c.get(Calendar.HOUR).toString() + ":" + c.get(Calendar.MINUTE).toString()
                 if (
                     timeFirstIsMoreOrEqual(nowStr, startAt) &&
                     timeFirstIsMoreOrEqual(endAt, nowStr)
