@@ -22,13 +22,13 @@ interface PhotoDatabaseDao {
     @Query("SELECT * FROM photo WHERE day_cell_num = :dayCell AND time_cell_num = :timeCell ORDER BY photoId DESC LIMIT 1")
     fun getSelectedCellLast(dayCell: Int, timeCell: Int): Photo?
 
-    @Query("SELECT * FROM photo WHERE day_cell_num = :dayCell AND time_cell_num = :timeCell ORDER BY photoId DESC")
+    @Query("SELECT * FROM photo WHERE day_cell_num = :dayCell AND time_cell_num = :timeCell")
     fun getSelectedCell(dayCell: Int, timeCell: Int): List<Photo>
 
     @Query("SELECT * FROM photo WHERE time_cell_num = :timeCell ORDER BY photoId DESC LIMIT 1")
     fun getSelectedDayLast(timeCell: Int): Photo?
 
-    @Query("SELECT * FROM photo WHERE time_cell_num = :timeCell ORDER BY photoId DESC")
+    @Query("SELECT * FROM photo WHERE time_cell_num = :timeCell")
     fun getSelectedDay(timeCell: Int): List<Photo>
 
     @Query("SELECT * FROM photo ORDER BY photoId DESC LIMIT 1")

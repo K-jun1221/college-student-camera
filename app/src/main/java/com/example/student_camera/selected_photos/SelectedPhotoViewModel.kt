@@ -1,6 +1,7 @@
 package com.example.student_camera.selected_photos
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.student_camera.database.Photo
 import com.example.student_camera.database.PhotoDatabaseDao
@@ -71,7 +72,11 @@ class SelectedPhotoViewModel(
                 c.time = it.photo.createdAt
                 val month = c.get(Calendar.MONTH)
                 val day = c.get(Calendar.DATE)
-                if (month != monthMemo && day != dayMemo) {
+
+                Log.d("initialize month", month.toString())
+                Log.d("initialize day", day.toString())
+
+                if (month != monthMemo || day != dayMemo) {
                     val label =
                         month.toString() + "月" + day.toString() + "(" + numToDay.get(c.get(Calendar.DAY_OF_WEEK)) + ")"
                     tempList += listOf<DataItem>(DataItem.Header(label))
@@ -79,6 +84,10 @@ class SelectedPhotoViewModel(
                     dayMemo = day
                 }
                 tempList += listOf<DataItem>(it)
+                tempList
+                Log.d("initialize it", it.toString())
+                Log.d("initialize monthMemo", monthMemo.toString())
+                Log.d("initialize dayMemo", dayMemo.toString())
             })
 
 
